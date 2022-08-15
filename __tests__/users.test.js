@@ -39,14 +39,23 @@ describe('yawp user routes', () => {
     const res = await request(app)
       .post('/api/v1/users/sessions')
       .send({ email: 'test@example.com', password: '12345' });
-    expect(res.status).toEqual(200);
+    expect(res.status).toBe(200);
     expect(res.body.message).toEqual('You\'ve successfully signed in');
   });
 
   it('/protected should return a 401 if not authenticated', async () => {
     const res = await request(app).get('/api/v1/users/protected');
-    expect(res.status).toEqual(401);
+    expect(res.status).toBe(401);
   });
+
+  it('/users should return 403 if user not admin', async () => {
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users').send(mockUser);
+
+    const res = await agent.get('/api/v1/users');
+    expect(res.status).toBe(403);
+  });
+
 
 
   it('GET /api/v1/users should show a list of users to admin', async () => {
