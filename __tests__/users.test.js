@@ -43,4 +43,29 @@ describe('yawp user routes', () => {
     expect(res.body.message).toEqual('You\'ve successfully signed in');
   });
 
+  it('GET /api/v1/users should show a list of users to admin', async () => {
+    const agent = request.agent(app);
+
+    await agent.post('/api/v1/users').send({
+      firstName: 'admin',
+      lastName: 'admin',
+      email: 'admin',
+      password: 'admin'
+    });
+
+    await agent
+      .post('/api/v1/users/sessions')
+      .send({ email: 'admin', password: 'admin' });
+
+    const res = await agent.get('/api/v1/users');
+
+    expect(res.status).toBe(200);
+    expect(res.body[0]).toEqual({
+      id: expect.any(String),
+      firstName: expect.any(String),
+      lastName: expect.any(String),
+      email: expect.any(String),
+    });
+  });
+
 });
