@@ -43,6 +43,12 @@ describe('yawp user routes', () => {
     expect(res.body.message).toEqual('You\'ve successfully signed in');
   });
 
+  it('/protected should return a 401 if not authenticated', async () => {
+    const res = await request(app).get('/api/v1/users/protected');
+    expect(res.status).toEqual(401);
+  });
+
+
   it('GET /api/v1/users should show a list of users to admin', async () => {
     const agent = request.agent(app);
 
