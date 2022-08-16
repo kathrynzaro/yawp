@@ -65,5 +65,21 @@ describe('restaurant', () => {
       ...mockReview,
     });
   });
+
+  it('DELETE /api/v1/reviews/:id should delete a review for admin', async () => {
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users').send({
+      firstName: 'admin',
+      lastName: 'admin',
+      email: 'admin',
+      password: 'admin'
+    });
+
+    const res = await agent.delete('/api/v1/reviews/1');
+    expect(res.status).toBe(200);
+
+    const resp = await agent.get('/api/v1/reviews/1');
+    expect(resp.status).toBe(404);
+  });
   
 });
