@@ -54,8 +54,6 @@ describe('yawp user routes', () => {
     expect(res.status).toBe(403);
   });
 
-
-
   it('GET /api/v1/users should show a list of users to admin', async () => {
     const agent = request.agent(app);
 
@@ -65,11 +63,7 @@ describe('yawp user routes', () => {
       email: 'admin',
       password: 'admin'
     });
-
-    await agent
-      .post('/api/v1/users/sessions')
-      .send({ email: 'admin', password: 'admin' });
-
+    
     const res = await agent.get('/api/v1/users');
 
     expect(res.status).toBe(200);
