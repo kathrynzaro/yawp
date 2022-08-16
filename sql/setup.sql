@@ -36,13 +36,14 @@ CREATE TABLE yawp_reviews (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   restaurant_id BIGINT,
   user_id BIGINT,
+  stars INT,
   content VARCHAR NOT NULL,
   FOREIGN KEY (restaurant_id) REFERENCES yawp_restaurants(id),
   FOREIGN KEY (user_id) REFERENCES yawp_users(id)
 );
 
-INSERT INTO yawp_reviews (restaurant_id, user_id, content) VALUES 
-(1, 1, 'there are creepy dolls and it is creepy and creepy is good and also creepy and there is beer'),
-(2, 1, 'just get three orders of pad thai with tofu and eat it all do it'),
-(3, 2, 'veggie fajita burrito add chipotle and pico de gallo, if you forget to ask for extra salsa verde you will be wrong'),
-(4, 2, 'coffee is good but kat used to work here and she is just okay');
+INSERT INTO yawp_reviews (restaurant_id, user_id, stars, content) VALUES 
+(1, 1, 4, 'there are creepy dolls and it is creepy and creepy is good and also creepy and there is beer'),
+(2, 1, 5, 'just get three orders of pad thai with tofu and eat it all do it'),
+(3, 2, 4, 'veggie fajita burrito add chipotle and pico de gallo, if you forget to ask for extra salsa verde you will be wrong'),
+(4, 2, 4, 'coffee is good but kat used to work here and she is just okay');

@@ -3,6 +3,12 @@ const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
 
+const mockUser = {
+  firstName: 'Test',
+  lastName: 'User',
+  email: 'test@example.com',
+  password: '12345',
+};
 
 describe('restaurant', () => {
   beforeEach(() => {
@@ -35,6 +41,28 @@ describe('restaurant', () => {
       type: 'Bar',
       location: 'Portland',
       reviews: expect.any(Array),
+    });
+  });
+
+  it('#POST /restaurants/:restId/reviews creates new review for authenticated users', async () => {
+    const mockReview = {
+      stars: 4,
+      content: 'ugh',
+    };
+
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users').send(mockUser);
+
+    const res = await agent
+      .post('/api/v1/restaurants/1/reviews')
+      .send(mockReview);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: '5',
+      user_id: expect.any(String),
+      restaurant_id: '1',
+      ...mockReview,
     });
   });
   
