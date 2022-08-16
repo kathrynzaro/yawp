@@ -81,5 +81,25 @@ describe('restaurant', () => {
     const resp = await agent.get('/api/v1/reviews/1');
     expect(resp.status).toBe(404);
   });
+
+  it('DELETE /api/v1/reviews/:id should delete a review for user who posted it', async () => {
+    const mockReview = {
+      stars: 4,
+      content: 'ugh',
+    };
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users').send(mockUser);
+
+    const response = await agent
+      .post('/api/v1/restaurants/1/reviews')
+      .send(mockReview);
+    expect(response.status).toBe(200);
+
+    const res = await agent.delete('/api/v1/reviews/5');
+    expect(res.status).toBe(200);
+
+    const resp = await agent.get('/api/v1/reviews/5');
+    expect(resp.status).toBe(404);
+  });
   
 });
