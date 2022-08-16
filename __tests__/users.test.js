@@ -25,12 +25,10 @@ describe('yawp user routes', () => {
     expect(res.status).toEqual(200);
     expect(res.body).toEqual({
       message: 'You\'ve successfully signed in',
-      user: {
-        id: expect.any(String),
-        firstName,
-        lastName,
-        email,
-      },
+      id: expect.any(String),
+      firstName,
+      lastName,
+      email,
     });
   });
 

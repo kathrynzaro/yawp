@@ -1,6 +1,7 @@
 -- Use this file to define your SQL tables
 -- The SQL in this file will be executed when you run `npm run setup-db`
 
+DROP TABLE IF EXISTS yawp_reviews;
 DROP TABLE IF EXISTS yawp_users;
 DROP TABLE IF EXISTS yawp_restaurants;
 
@@ -30,3 +31,18 @@ INSERT INTO yawp_restaurants (name, type, location) VALUES
 ('Pad Thai Kitchen', 'Thai', 'Portland'),
 ('El Burrito Azteca', 'Mexican', 'Portland'),
 ('Stumptown', 'Café', 'Portland');
+
+CREATE TABLE yawp_reviews (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  restaurant_id BIGINT,
+  user_id BIGINT,
+  content VARCHAR NOT NULL,
+  FOREIGN KEY (restaurant_id) REFERENCES yawp_restaurants(id),
+  FOREIGN KEY (user_id) REFERENCES yawp_users(id)
+);
+
+INSERT INTO yawp_reviews (restaurant_id, user_id, content) VALUES 
+(1, 1, 'there are creepy dolls and it is creepy and creepy is good and also creepy and there is beer'),
+(2, 1, 'just get three orders of pad thai with tofu and eat it all do it'),
+(3, 2, 'veggie fajita burrito add chipotle and pico de gallo, if you forget to ask for extra salsa verde you will be wrong'),
+(4, 2, 'coffee is good but kat used to work here and she is just okay');
