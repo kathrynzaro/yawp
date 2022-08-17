@@ -58,15 +58,16 @@ describe('yawp user routes', () => {
     const agent = request.agent(app);
 
     await agent.post('/api/v1/users').send({
-      firstName: 'admin',
-      lastName: 'admin',
+      firstName: 'hard',
+      lastName: 'nope',
       email: 'admin',
-      password: 'admin'
+      password: '9876543',
     });
     
     const res = await agent.get('/api/v1/users');
 
     expect(res.status).toBe(200);
+    expect(res.body.length).toBe(2);
     expect(res.body[0]).toEqual({
       id: expect.any(String),
       firstName: expect.any(String),
