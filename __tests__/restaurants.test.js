@@ -47,7 +47,7 @@ describe('restaurant', () => {
   it('#POST /restaurants/:restId/reviews creates new review for authenticated users', async () => {
     const mockReview = {
       stars: 4,
-      content: 'ugh',
+      detail: 'ugh',
     };
 
     const agent = request.agent(app);
@@ -85,7 +85,7 @@ describe('restaurant', () => {
   it('DELETE /api/v1/reviews/:id should delete a review for user who posted it', async () => {
     const mockReview = {
       stars: 4,
-      content: 'ugh',
+      detail: 'ugh',
     };
     const agent = request.agent(app);
     await agent.post('/api/v1/users').send(mockUser);
